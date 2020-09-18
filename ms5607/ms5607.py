@@ -1,6 +1,25 @@
 import smbus
 import time
 
+STANDARD_PRESSURE = 1013.25
+
+def convert_altitude(local_pressure, sea_level_pressure=STANDARD_PRESSURE):
+    """
+    So how does pressure vary with altitude? Or, more usefully, if you know the local air pressure,
+    how do you compute your altitude from that? The following formula yields altitude in terms of pressure for the
+    troposphere (i.e. from below sea level to 11 km):
+
+                          ┌             0.190264 ┐
+   Altitude = 44330.76923 │ 1 - (P / P0)         │
+                          └                      ┘
+    where Altitude is in meters. P is the local air pressure, and P0 is the pressure at sea level,
+    both expressed in the same units, whether millibars, Pascals, or inches of mercury.
+    When P0 is set equal to the standard sea level pressure of 1013.25 mb, the altitude yielded by the formula
+    is called the "pressure altitude." The actual altitude may be computed by substituting the local air pressure,
+    corrected to sea level, for P0.
+    """
+    return 44330.76923 * (1 - (local_pressure / sea_level_pressure) ** 0.190264)
+
 
 class MS5607(object):
     """
@@ -128,6 +147,17 @@ class MS5607(object):
         raw_temperature = self.read_raw_temperature(osr=temperature_osr)
 
         return self.convert_raw_readings(raw_pressure, raw_temperature)
+
+    def read_altitude(self, sea_level_pressure=STANDARD_PRESSURE, samples=48, pressure_osr=4096, temperature_osr=4096):
+        accum = 0
+        for n in range(0, samples):
+            time.sleep(0.001)
+
+            press, temp = self.read(pressure_osr, temperature_osr)
+            accum += press
+
+        avg = accum / samples
+        return convert_altitude(avg, sea_level_pressure)
 
     def read_raw_pressure(self, osr=4096):
         """Return the raw pressure value from the sensor.
