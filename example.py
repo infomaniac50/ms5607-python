@@ -1,7 +1,7 @@
-import ms5803py
+import ms5607
 import time
 
-s = ms5803py.MS5803()
+s = ms5607.MS5607()
 while True:
     # Do the batteries-included version, optionally specifying an OSR.
     press, temp = s.read(pressure_osr=512)

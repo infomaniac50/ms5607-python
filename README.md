@@ -1,37 +1,33 @@
-[![MS5803-14BA](ms5803.jpg)](https://www.sparkfun.com/products/12909)
+[![MS5607-02BA03](ms5607.png)](https://www.parallax.com/product/29124)
 
-# ms5803py
-Python 3 library for MS5803-14BA pressure sensor for Raspberry Pi over i2c.
+# ms5607
+Python 3 library for MS5607-02BA03 pressure sensor for Raspberry Pi over i2c.
 
-Based off of the [Adafruit Arduino Library](https://github.com/sparkfun/MS5803-14BA_Breakout) and the [Control Everything Python Library](https://github.com/ControlEverythingCommunity/MS5803-14BA). Some of the math is complicated when correcting raw readings to actual temperatures and pressures, that math can be verified from the [MS5803-14BA datasheet](http://www.te.com/commerce/DocumentDelivery/DDEController?Action=showdoc&DocId=Data+Sheet%7FMS5803-14BA%7FB3%7Fpdf%7FEnglish%7FENG_DS_MS5803-14BA_B3.pdf%7FCAT-BLPS0013).
+Based off of [Python 3 library for MS5803-14BA](https://github.com/NickCrews/ms5803py). Some of the math is complicated when correcting raw readings to actual temperatures and pressures, that math can be verified from the [MS5607-02BA03 datasheet](http://www.te.com/commerce/DocumentDelivery/DDEController?Action=showdoc&DocId=Data+Sheet%7FMS5803-14BA%7FB3%7Fpdf%7FEnglish%7FENG_DS_MS5803-14BA_B3.pdf%7FCAT-BLPS0013).
 
-Supports reading the pressure and temperature values from the sensor at any of the supported OverSampling Rates (OSR). A higher OSR leads to greater resolution/accuracy but requires a longer conversion time. The supported OSR rates are [256, 512, 1024, 2048, 4096], also available at `MS5803.OSRs`.
+Supports reading the pressure and temperature values from the sensor at any of the supported OverSampling Rates (OSR). A higher OSR leads to greater resolution/accuracy but requires a longer conversion time. The supported OSR rates are [256, 512, 1024, 2048, 4096], also available at `MS5607.OSRs`.
 
 ## Installation
-Available on PyPi, so you can install on your RPi using
-````
-pip3 install ms5803py
-````
-or clone this repository and run
+Clone this repository and run
 ```
-python3 setup.py install
+pipenv install
 ```
 
 ## Usage
-The MS5803 and the RPi use the I2C protocol to communicate, so you need to have I2C set up on your pi, as explained in [this Adafruit tutorial](https://learn.adafruit.com/adafruits-raspberry-pi-lesson-4-gpio-setup/configuring-i2c). After that, the MS5803 needs to be hooked up to the Raspberry Pi as described in [this Adafruit tutorial](https://learn.sparkfun.com/tutorials/ms5803-14ba-pressure-sensor-hookup-guide).
+The MS5607 and the RPi use the I2C protocol to communicate, so you need to have I2C set up on your pi, as explained in [this Adafruit tutorial](https://learn.adafruit.com/adafruits-raspberry-pi-lesson-4-gpio-setup/configuring-i2c). After that, the MS5607 needs to be hooked up to the Raspberry Pi as described in [this Adafruit tutorial](https://learn.sparkfun.com/tutorials/ms5803-14ba-pressure-sensor-hookup-guide).
 
-After doing that, you must find the I2C address of your MS5803. To do this, run the following command both before and after plugging in the MS5803. Whatever address shows up is the one you want:
+After doing that, you must find the I2C address of your MS5607. To do this, run the following command both before and after plugging in the MS5607. Whatever address shows up is the one you want:
 ```
 sudo i2cdetect -y 1
 ````
-It should be either `0X76` or `0x77`, as described in the [MS5803-14BA datasheet](http://www.te.com/commerce/DocumentDelivery/DDEController?Action=showdoc&DocId=Data+Sheet%7FMS5803-14BA%7FB3%7Fpdf%7FEnglish%7FENG_DS_MS5803-14BA_B3.pdf%7FCAT-BLPS0013), depending on if the CSB (Chip Select) pin on the MS5803 is high or low. On the [Sparkfun breakout board](https://www.sparkfun.com/products/12909) the I2C address is `0x76`, so I have that set as the default if you don't specify an address when initializing the sensor.
+It should be either `0X76` or `0x77`, as described in the [MS5607-02BA03 datasheet](https://www.parallax.com/sites/default/files/downloads/29124-MS5607-02BA03-Datasheet.pdf), depending on if the CSB (Chip Select) pin on the MS5607 is high or low. On the [Altimeter Module MS5607](https://www.parallax.com/product/29124) the I2C address is `0x76`, so I have that set as the default if you don't specify an address when initializing the sensor.
 
 See `python3 example.py` for an example of usage:
 ```
-import ms5803py
+import ms5607
 import time
 
-s = ms5803py.MS5803()
+s = ms5607.MS5607()
 while True:
     # Do the batteries-included version, optionally specifying an OSR.
     press, temp = s.read(pressure_osr=512)
@@ -50,17 +46,17 @@ while True:
 ```
 results in:
 ```
-quick'n'easy pressure=835.7 mBar, temperature=26.64 C
-advanced pressure=835.3 mBar, temperature=26.64 C
-advanced pressure=834.2 mBar, temperature=26.64 C
-advanced pressure=835.3 mBar, temperature=26.64 C
-advanced pressure=834.2 mBar, temperature=26.64 C
-advanced pressure=834.2 mBar, temperature=26.64 C
-quick'n'easy pressure=835.1 mBar, temperature=26.65 C
-advanced pressure=835.3 mBar, temperature=26.63 C
-advanced pressure=837.7 mBar, temperature=26.63 C
-advanced pressure=834.2 mBar, temperature=26.63 C
-advanced pressure=831.8 mBar, temperature=26.63 C
-advanced pressure=835.3 mBar, temperature=26.63 C
+quick'n'easy pressure=990.02 mBar, temperature=27.61 C
+advanced pressure=990.19 mBar, temperature=27.61 C
+advanced pressure=990.42 mBar, temperature=27.61 C
+advanced pressure=989.97 mBar, temperature=27.61 C
+advanced pressure=990.19 mBar, temperature=27.61 C
+advanced pressure=989.97 mBar, temperature=27.61 C
+quick'n'easy pressure=990.1 mBar, temperature=27.62 C
+advanced pressure=990.21 mBar, temperature=27.62 C
+advanced pressure=990.21 mBar, temperature=27.62 C
+advanced pressure=990.44 mBar, temperature=27.62 C
+advanced pressure=990.21 mBar, temperature=27.62 C
+advanced pressure=990.21 mBar, temperature=27.62 C
 ...
 ```
