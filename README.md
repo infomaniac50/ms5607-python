@@ -1,4 +1,4 @@
-[![MS5607-02BA03](ms5607.png)](https://www.parallax.com/product/29124)
+![Altimeter Module MS5607- Top View](ms5607-front.png) ![Altimeter Module MS5607- Top View](ms5607-back.png)
 
 # ms5607
 Python 3 library for MS5607-02BA03 pressure sensor for Raspberry Pi over i2c.
