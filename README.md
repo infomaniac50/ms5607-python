@@ -3,9 +3,14 @@
 # ms5607
 Python 3 library for MS5607-02BA03 pressure sensor for Raspberry Pi over i2c.
 
-Based off of [Python 3 library for MS5803-14BA](https://github.com/NickCrews/ms5803py). Some of the math is complicated when correcting raw readings to actual temperatures and pressures, that math can be verified from the [MS5607-02BA03 datasheet](http://www.te.com/commerce/DocumentDelivery/DDEController?Action=showdoc&DocId=Data+Sheet%7FMS5803-14BA%7FB3%7Fpdf%7FEnglish%7FENG_DS_MS5803-14BA_B3.pdf%7FCAT-BLPS0013).
+Based off of [Python 3 library for MS5803-14BA](https://github.com/NickCrews/ms5803py) and parts of [Python i2c interface for the MS5607 altimeter](https://github.com/rsolomon/py-MS5607). Some of the math is complicated when correcting raw readings to actual temperatures and pressures, that math can be verified from the [MS5607-02BA03 datasheet](http://www.te.com/commerce/DocumentDelivery/DDEController?Action=showdoc&DocId=Data+Sheet%7FMS5803-14BA%7FB3%7Fpdf%7FEnglish%7FENG_DS_MS5803-14BA_B3.pdf%7FCAT-BLPS0013).
 
 Supports reading the pressure and temperature values from the sensor at any of the supported OverSampling Rates (OSR). A higher OSR leads to greater resolution/accuracy but requires a longer conversion time. The supported OSR rates are [256, 512, 1024, 2048, 4096], also available at `MS5607.OSRs`.
+## Prerequisites
+
+### Pipenv
+
+Read [Pipenv: Python Dev Workflow for Humans](https://docs.pipenv.org/) and (Installing Pipenv](https://docs.pipenv.org/install/#installing-pipenv) for instructions on how to use and install Pipenv.
 
 ## Installation
 Clone this repository and run
