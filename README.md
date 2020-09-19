@@ -10,7 +10,7 @@ Supports reading the pressure and temperature values from the sensor at any of t
 
 ### Pipenv
 
-Read [Pipenv: Python Dev Workflow for Humans](https://docs.pipenv.org/) and (Installing Pipenv](https://docs.pipenv.org/install/#installing-pipenv) for instructions on how to use and install Pipenv.
+Read [Pipenv: Python Dev Workflow for Humans](https://docs.pipenv.org/) and [Installing Pipenv](https://docs.pipenv.org/install/#installing-pipenv) for instructions on how to use and install Pipenv.
 
 ## Installation
 Clone this repository and run
